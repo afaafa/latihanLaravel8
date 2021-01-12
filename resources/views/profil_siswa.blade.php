@@ -8,7 +8,9 @@
             <h3>Profil Siswa</h3>
         </div>
         <div class="card-body">
+            @can('isAdmin')
             <a href="{{route ('siswa.index')}}">Kembali</a>
+            @endcan
                 <div class="row ml-2">
                     <h4 class="col-5">Nama</h4>
                     <h4> : {{$siswa->nama}} </h4>
