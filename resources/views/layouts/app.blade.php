@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'SMA 404') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -34,15 +34,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <!--<li class="nav-item active">
-                            <a class="nav-link" href="{{ url('/beranda') }}">Home</a>
-                        </li>-->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/data-siswa') }}">Data Siswa</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/info-kegiatan') }}">Info Kegiatan</a>
                         </li>
+
+                        @can('isAdmin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('siswa.index') }}">Data Siswa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">Manajemen User</a>
+                        </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -67,11 +70,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @can('isSiswa')
+                                    <a class="dropdown-item" href="{{route ('siswa.show', Auth::user()->siswa_id)}}">My Profil</a>
+                                    @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
-                                    </a>
+                                    </a>                             
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
